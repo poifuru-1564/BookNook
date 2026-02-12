@@ -1,5 +1,5 @@
 import { ColorPalette, FontSize } from "@/constants/useTheme";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs } from "expo-router";
 import React from "react";
@@ -53,9 +53,9 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="stats"
         options={{
-          title: "Stats",
+          title: "Profile",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="stats-chart" size={size} color={color} />
+            <AntDesign name="profile" size={size} color={color} />
           ),
         }}
       />

@@ -2,19 +2,13 @@ import AddCard from "@/components/AddCard";
 import Card from "@/components/Card";
 import OpenModal from "@/components/Modal";
 import { ColorPalette, FontSize } from "@/constants/useTheme";
-import { BookPlus } from "lucide-react-native";
 import React, { useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function index() {
   const [isModalVisible, setModalVisible] = useState(false);
+
   const onClose = () => {
     setModalVisible(false);
   };
@@ -22,18 +16,19 @@ export default function index() {
   return (
     <SafeAreaView edges={["top"]}>
       <ScrollView>
-        <View>
-          <OpenModal isVisible={isModalVisible} onClose={onClose}>
-            <AddCard onClose={onClose} />
-          </OpenModal>
-        </View>
+        <OpenModal isVisible={isModalVisible} onClose={onClose}>
+          <AddCard onClose={onClose} />
+        </OpenModal>
 
         <View style={styles.container}>
           <View style={styles.titleContainer}>
             <Text style={styles.homeTitle}>Current Reads</Text>
-            <TouchableOpacity style={styles.plusIcon}>
-              <BookPlus size={25} onPress={() => setModalVisible(true)} />
-            </TouchableOpacity>
+            <Pressable
+              onPress={() => setModalVisible(true)}
+              style={styles.plusIcon}
+            >
+              <Text style={styles.plusIcon}>+</Text>
+            </Pressable>
           </View>
           <Card />
           <Card />
@@ -62,7 +57,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   plusIcon: {
-    opacity: 0.5,
-    paddingRight: 15,
+    paddingRight: 10,
+    fontSize: FontSize.title,
   },
 });

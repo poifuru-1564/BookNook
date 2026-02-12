@@ -9,22 +9,19 @@ type Props = PropsWithChildren<{
 
 export default function OpenModal({ isVisible, children, onClose }: Props) {
   return (
-    <View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isVisible}
-        allowSwipeDismissal={true}
-        onRequestClose={() => {
-          Alert.alert("Close?", "Draft will not be saved.", [
-            { text: "Continue", style: "cancel" },
-            { text: "Close", style: "destructive", onPress: onClose },
-          ]);
-        }}
-      >
-        <View style={styles.modalContainer}>{children}</View>
-      </Modal>
-    </View>
+    <Modal
+      animationType="slide"
+      visible={isVisible}
+      allowSwipeDismissal={true}
+      onRequestClose={() => {
+        Alert.alert("Close?", "Changes will not be saved.", [
+          { text: "Continue", style: "cancel" },
+          { text: "Close", style: "destructive", onPress: onClose },
+        ]);
+      }}
+    >
+      <View style={styles.modalContainer}>{children}</View>
+    </Modal>
   );
 }
 
