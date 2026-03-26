@@ -1,17 +1,10 @@
 import { FontSize } from "@/constants/useTheme";
-// import {
-//   appleAuth,
-//   AppleButton,
-// } from "@invertase/react-native-apple-authentication";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithCredential,
-} from "@react-native-firebase/auth";
+
 import {
   GoogleSignin,
   GoogleSigninButton,
 } from "@react-native-google-signin/google-signin";
+import handleGoogleSignIn from "../../features/auth/signIn";
 
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -20,49 +13,6 @@ export default function Login() {
   GoogleSignin.configure({
     webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
   });
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-
-      //google signin
-      const response = await GoogleSignin.signIn();
-      const idToken = response.data?.idToken;
-      if (!idToken) {
-        throw new Error("Authentication Failed.");
-      }
-
-      //firebase
-      const googleCredential = GoogleAuthProvider.credential(
-        response.data?.idToken,
-      );
-      return signInWithCredential(getAuth(), googleCredential);
-    } catch (error: any) {
-      alert("Error: " + error.message + ". Please try again.");
-    }
-  };
-
-  // const handleAppleSignIn = async () => {
-  //   try {
-  //     const response = await appleAuth.performRequest({
-  //       requestedOperation: appleAuth.Operation.LOGIN,
-  //       requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
-  //     });
-
-  //     if (!response.identityToken) {
-  //       throw new Error("Authentication Failed.");
-  //     }
-
-  //     //firebase
-  //     const { identityToken, nonce } = response;
-  //     const appleCredential = AppleAuthProvider.credential(
-  //       identityToken,
-  //       nonce,
-  //     );
-
-  //     return signInWithCredential(getAuth(), appleCredential);
-  //   } catch (error) {}
-  // };
 
   return (
     <View style={styles.container}>

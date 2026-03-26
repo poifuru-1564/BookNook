@@ -1,76 +1,33 @@
-import { ColorPalette } from "@/constants/useTheme";
+import { FontSize } from "@/constants/useTheme";
+import DisplayBooks from "@/features/bookshelf/DisplayBooks";
 import React from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const finished = () => {
   return (
-    <ScrollView>
-      <View style={styles.bkListContainer}>
-        <View style={styles.bkContainer}>
-          <Text>Title Here</Text>
-          <Text>Rating Here</Text>
-          <TouchableOpacity>
-            <Text>Click here to see your review</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.bkContainer}>
-          <Text>Title Here</Text>
-          <Text>Rating Here</Text>
-          <TouchableOpacity>
-            <Text>Click here to see your review</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.bkContainer}>
-          <Text>Title Here</Text>
-          <Text>Rating Here</Text>
-          <TouchableOpacity>
-            <Text>Click here to see your review</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.bkContainer}>
-          <Text>Title Here</Text>
-          <Text>Rating Here</Text>
-          <TouchableOpacity>
-            <Text>Click here to see your review</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.bkContainer}>
-          <Text>Title Here</Text>
-          <Text>Rating Here</Text>
-          <TouchableOpacity>
-            <Text>Click here to see your review</Text>
-          </TouchableOpacity>
-        </View>
+    <SafeAreaView>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Finished</Text>
       </View>
-    </ScrollView>
+
+      <DisplayBooks bookshelf="finished" />
+    </SafeAreaView>
   );
 };
 
 export default finished;
 
 const styles = StyleSheet.create({
-  bkListContainer: {
+  headerContainer: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
-    paddingHorizontal: 15,
-    gap: "5%",
-    marginTop: 20,
+    justifyContent: "space-between",
   },
-  bkContainer: {
-    width: "30%",
-    height: 150,
-    borderStyle: "solid",
-    borderWidth: 1,
-    backgroundColor: ColorPalette.card,
+  header: {
+    fontSize: FontSize.title,
+    fontWeight: "600",
+    paddingTop: 10,
+    paddingLeft: 20,
+    paddingBottom: 10,
   },
 });

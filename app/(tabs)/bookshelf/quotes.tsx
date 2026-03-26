@@ -1,25 +1,26 @@
-import AddQuotes from "@/components/AddQuotes";
-import OpenModal from "@/components/Modal";
 import { ColorPalette, FontSize } from "@/constants/useTheme";
-import { Ionicons } from "@expo/vector-icons";
+import AddQuotes from "@/features/bookshelf/AddQuotes";
+import DisplayQuotes from "@/features/bookshelf/DisplayQuotes";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   Button,
-  ScrollView,
+  Keyboard,
+  KeyboardEventListener,
+  Modal,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const quotes = () => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const onClose = () => {
-    setModalVisible(false);
-  };
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   const navigation = useNavigation();
   React.useEffect(() => {
@@ -30,96 +31,105 @@ const quotes = () => {
     });
   });
 
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener(
+      "keyboardDidShow",
+      handleKeyboardShow,
+    );
+
+    const hideSubscription = Keyboard.addListener(
+      "keyboardDidHide",
+      handleKeyboardHide,
+    );
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
+  const handleKeyboardShow: KeyboardEventListener = (event) => {
+    setKeyboardHeight(event.endCoordinates.height);
+    setKeyboardVisible(true);
+  };
+
+  const handleKeyboardHide: KeyboardEventListener = (event) => {
+    setKeyboardVisible(false);
+  };
+
   return (
-    <View>
-      <View>
-        <OpenModal isVisible={isModalVisible} onClose={onClose}>
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                Alert.alert("Close?", "Draft will not be saved.", [
-                  { text: "Continue Editing", style: "cancel" },
-                  { text: "Close", style: "destructive", onPress: onClose },
-                ]);
-              }}
-            >
-              <Ionicons name="close" size={20} style={styles.closeIcon} />
-            </TouchableOpacity>
+    <SafeAreaView>
+      <Modal visible={isModalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert("Close?", "Draft will not be saved.", [
+                { text: "Continue Editing", style: "cancel" },
+                {
+                  text: "Close",
+                  style: "destructive",
+                  onPress: () => setModalVisible(false),
+                },
+              ]);
+            }}
+            style={{ alignSelf: "flex-start", padding: 5 }}
+          >
+            <Ionicons name="close" size={20} style={styles.closeIcon} />
+          </TouchableOpacity>
 
-            <AddQuotes />
-          </View>
-        </OpenModal>
-
-        <View style={styles.searchBar}>
-          <Ionicons name="search" color={ColorPalette.muted} size={16} />
-          <TextInput style={styles.searchBarInput} placeholder="title/author" />
+          <AddQuotes
+            setEditVisible={setModalVisible}
+            keyboardHeight={keyboardHeight}
+            isKeyboardVisible={isKeyboardVisible}
+          />
         </View>
+      </Modal>
 
-        <ScrollView style={styles.quotesListContainer}>
-          <View style={styles.quotesContainer}>
-            <Text style={styles.quotesContent}>Quotes here</Text>
-            <Text style={styles.quotesSubtext}>
-              - arthor, title, page, line
-            </Text>
-          </View>
-          <View style={styles.quotesContainer}>
-            <Text style={styles.quotesContent}>Quotes here</Text>
-            <Text style={styles.quotesSubtext}>
-              - arthor, title, page, line
-            </Text>
-          </View>
-
-          <View style={styles.quotesContainer}>
-            <Text style={styles.quotesContent}>Quotes here</Text>
-            <Text style={styles.quotesSubtext}>
-              - arthor, title, page, line
-            </Text>
-          </View>
-        </ScrollView>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Quotes</Text>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Entypo name="plus" size={20} style={styles.plusIcon} />
+        </TouchableOpacity>
       </View>
-    </View>
+
+      <View style={styles.quotesListContainer}>
+        <DisplayQuotes
+          keyboardHeight={keyboardHeight}
+          isKeyboardVisible={isKeyboardVisible}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
 export default quotes;
 
 const styles = StyleSheet.create({
-  closeIcon: { paddingLeft: 10 },
-  searchBar: {
-    borderColor: ColorPalette.muted,
-    borderWidth: 0.5,
-    borderStyle: "solid",
-    borderRadius: 15,
-    width: "75%",
-    alignSelf: "center",
-    marginTop: 20,
-    padding: 8,
+  headerContainer: {
     flexDirection: "row",
+    justifyContent: "space-between",
   },
-  searchBarInput: {
-    paddingLeft: 5,
-    fontSize: 13,
+  header: {
+    fontSize: FontSize.title,
+    fontWeight: "600",
+    paddingTop: 10,
+    paddingLeft: 20,
+    paddingBottom: 10,
   },
+  plusIcon: {
+    paddingTop: 10,
+    paddingRight: 15,
+  },
+  closeIcon: { paddingLeft: 10 },
+
   quotesListContainer: {
     marginTop: 10,
+    height: "100%",
   },
-  quotesContainer: {
-    borderColor: ColorPalette.muted,
-    borderWidth: 0.5,
-    borderStyle: "solid",
-    width: "85%",
-    alignSelf: "center",
-    padding: 8,
-    marginTop: 15,
-  },
-  quotesContent: {
+  modalContainer: {
+    backgroundColor: ColorPalette.background,
     color: ColorPalette.text,
-    fontSize: FontSize.text,
-  },
-  quotesSubtext: {
-    color: ColorPalette.muted,
-    alignSelf: "flex-end",
-    paddingRight: 10,
-    fontSize: FontSize.sub,
+    paddingTop: 55,
+    flex: 1,
   },
 });

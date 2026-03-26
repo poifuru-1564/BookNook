@@ -1,5 +1,5 @@
 import { ColorPalette, FontSize } from "@/constants/useTheme";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { AntDesign, Entypo, FontAwesome } from "@expo/vector-icons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs } from "expo-router";
 import React from "react";
@@ -41,7 +41,7 @@ const TabsLayout = () => {
       />
 
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: "Home",
           tabBarIcon: ({ color, size }) => (
@@ -51,11 +51,28 @@ const TabsLayout = () => {
       />
 
       <Tabs.Screen
-        name="stats"
+        name="index"
+        options={{
+          href: null,
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="profile" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: "chat",
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="chat" size={size} color={color} />
           ),
         }}
       />

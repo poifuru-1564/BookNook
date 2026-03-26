@@ -1,0 +1,45 @@
+
+
+users
+  └── userId
+        └── bookshelf
+              └── bookId
+└── quotes
+      └── quoteId
+
+books (collection)
+  └── bookId (doc) => isbn
+        ├── title
+        ├── author
+        ├── pageCount
+        ├── imageLink
+
+users
+  └── userId
+        ├── username
+        ├── finishedBooks
+        ├── totalPages
+        ├── booksInProgress
+        └── bookshelf (subcollection)   
+                  └── bookID == isbn / manual_{autoID}
+                        ├── imageLink  
+                        ├── status: "progress" | "finished" | "wishlist"
+                        ├── currentPage?
+                        ├── lastRead? (===finishedDate)
+                        ├── rating?
+                        ├── review?
+                        ├── startedAt? 
+                        ├── pageCount
+                        
+
+// should quotes be another subcollection of users collection ??
+quotes
+  └── quotesID
+        └── ├── title   <-| can use bookID but maybe unnecessary? 
+            ├── author  <-|
+            ├── text
+            ├── page
+            ├── line
+            ├── userID
+
+      

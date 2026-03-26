@@ -1,24 +1,22 @@
-import AddBook from "@/components/AddBook";
-import OpenModal from "@/components/Modal";
-import { ColorPalette } from "@/constants/useTheme";
-import { Ionicons } from "@expo/vector-icons";
+import { ColorPalette, FontSize } from "@/constants/useTheme";
+import AddBook from "@/features/bookshelf/AddBook";
+import DisplayBooks from "@/features/bookshelf/DisplayBooks";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
 import React, { useState } from "react";
 import {
   Alert,
   Button,
-  ScrollView,
+  Modal,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const wishlist = () => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const onClose = () => {
-    setModalVisible(false);
-  };
 
   const navigation = useNavigation();
   React.useEffect(() => {
@@ -30,74 +28,65 @@ const wishlist = () => {
   });
 
   return (
-    <ScrollView>
-      <OpenModal isVisible={isModalVisible} onClose={onClose}>
-        <View>
+    <SafeAreaView style={{ paddingBottom: 40 }}>
+      <Modal visible={isModalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
           <TouchableOpacity
             onPress={() => {
               Alert.alert("Close?", "Draft will not be saved.", [
                 { text: "Continue Editing", style: "cancel" },
-                { text: "Close", style: "destructive", onPress: onClose },
+                {
+                  text: "Close",
+                  style: "destructive",
+                  onPress: () => setModalVisible(false),
+                },
               ]);
             }}
+            style={{ alignSelf: "flex-start", padding: 5 }}
           >
             <Ionicons name="close" size={20} style={styles.closeIcon} />
           </TouchableOpacity>
 
-          <AddBook />
+          <AddBook setAddBookVisible={setModalVisible} />
         </View>
-      </OpenModal>
+      </Modal>
 
-      <View style={styles.bkListContainer}>
-        <View style={styles.bkContainer}>
-          <Text>Title Here</Text>
-          <TouchableOpacity>
-            <Text>Start</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.bkContainer}>
-          <Text>Title Here</Text>
-          <TouchableOpacity>
-            <Text>Start</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.bkContainer}>
-          <Text>Title Here</Text>
-          <TouchableOpacity>
-            <Text>Start</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.bkContainer}>
-          <Text>Title Here</Text>
-          <TouchableOpacity>
-            <Text>Start</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Wishlist</Text>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Entypo name="plus" size={20} style={styles.plusIcon} />
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+      <DisplayBooks bookshelf="wishlist" />
+    </SafeAreaView>
   );
 };
 
 export default wishlist;
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  header: {
+    fontSize: FontSize.title,
+    fontWeight: "600",
+    paddingTop: 10,
+    paddingLeft: 20,
+    paddingBottom: 10,
+  },
+  plusIcon: {
+    paddingTop: 10,
+    paddingRight: 15,
+  },
   closeIcon: {
     paddingLeft: 10,
   },
-  bkListContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
-    paddingHorizontal: 15,
-    gap: "5%",
-    marginTop: 20,
-  },
-  bkContainer: {
-    width: "30%",
-    height: 150,
-    borderStyle: "solid",
-    borderWidth: 1,
-    backgroundColor: ColorPalette.card,
+  modalContainer: {
+    backgroundColor: ColorPalette.background,
+    color: ColorPalette.text,
+    paddingTop: 55,
+    flex: 1,
   },
 });

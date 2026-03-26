@@ -1,14 +1,7 @@
 import { Stack } from "expo-router";
-import React, { useState } from "react";
-import { Button } from "react-native";
+import React from "react";
 
 const BookShelfLayout = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const closeModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
   return (
     <Stack
       screenOptions={{
@@ -22,19 +15,23 @@ const BookShelfLayout = () => {
       <Stack.Screen
         name="wishlist"
         options={{
-          title: "Wishlist",
-          headerRight: () => (
-            <Button onPress={() => alert("use Modal")} title="+" />
-          ),
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="quotes"
         options={{
-          title: "Quotes",
+          headerShown: false,
         }}
       />
-      <Stack.Screen name="finished" options={{ title: "Finished" }} />
+      <Stack.Screen name="finished" options={{ headerShown: false }} />
+
+      <Stack.Screen
+        name="recommendation"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 };

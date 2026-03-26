@@ -1,30 +1,27 @@
-import { ColorPalette } from "@/constants/useTheme";
+import { ColorPalette, FontSize } from "@/constants/useTheme";
+import DisplayBooks from "@/features/bookshelf/DisplayBooks";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-type Props = {
-  onClose: () => void;
-};
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
-const AddCard = ({ onClose }: Props) => {
+const AddCard = () => {
   return (
     <View style={styles.addCardContainer}>
       <View>
-        <TouchableOpacity onPress={onClose} style={styles.closeIcon}>
-          <Ionicons name="close" size={20} />
-        </TouchableOpacity>
         <Text style={styles.addCardTitle}>Start a New Book</Text>
+        <Text style={styles.addCardSubtitle}>
+          Pick your next book from your bookshelf
+        </Text>
 
         <View style={styles.searchBar}>
           <Ionicons name="search" color={ColorPalette.muted} size={16} />
-          <TextInput style={styles.searchBarInput} placeholder="title..?" />
+          <TextInput
+            style={styles.searchBarInput}
+            placeholder="Title..?"
+            placeholderTextColor={ColorPalette.muted}
+          />
         </View>
+        <DisplayBooks bookshelf="wishlist" bookshelf2="finished" />
       </View>
     </View>
   );
@@ -38,7 +35,12 @@ const styles = StyleSheet.create({
   },
   addCardContainer: {},
   addCardTitle: {
-    fontSize: 20,
+    fontSize: FontSize.title,
+    alignSelf: "center",
+    marginBottom: 12,
+  },
+  addCardSubtitle: {
+    color: ColorPalette.muted,
     alignSelf: "center",
     marginBottom: 12,
   },
@@ -51,6 +53,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 8,
     flexDirection: "row",
+    marginBottom: 10,
   },
   searchBarInput: {
     paddingLeft: 5,

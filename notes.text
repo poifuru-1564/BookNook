@@ -1,0 +1,25 @@
+books
+- delete book from bookshelf 
+- detailed info half modal
+- review page for finished books 
+1. start a new book page 
+- selected book -> change status to "progress"
+- onEffect () : create "progress" book array 
+- display the items using flatlist (insert the variables)
+- implement other functions
+
+- filtering : low priority
+
+
+quotes 
+- when adding a new quote, user's bookshelfにそのquoteIDを紐づけるか
+- show quotes from that book in the finished bookshelf page -> detailed info
+
+
+
+
+Errors to fix
+- books with no isbn in the returned json && manual input ===> use handleManualInput() --> 
+--- Error handleManualInput(): Error: firebase.firestore().doc(*) 'documentPath' must point to a document.
+
+

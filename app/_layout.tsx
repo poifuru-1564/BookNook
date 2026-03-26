@@ -1,10 +1,10 @@
 import {
   FirebaseAuthTypes,
-  getAuth,
   onAuthStateChanged,
 } from "@react-native-firebase/auth";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
+import { auth } from "../firebase";
 
 export default function RootLayout() {
   const [initializing, setInitializing] = useState(true);
@@ -18,7 +18,7 @@ export default function RootLayout() {
   }
 
   useEffect(() => {
-    const subscriber = onAuthStateChanged(getAuth(), handleAuthStateChanged);
+    const subscriber = onAuthStateChanged(auth, handleAuthStateChanged);
     return subscriber;
   }, []);
 

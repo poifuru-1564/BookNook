@@ -1,0 +1,22 @@
+[debug] [2026-03-26T01:32:19.052Z] ----------------------------------------------------------------------
+[debug] [2026-03-26T01:32:19.058Z] Command:       /Users/sumireiwaki/Library/Application Support/Herd/config/nvm/versions/node/v25.6.0/bin/node /Users/sumireiwaki/Library/Application Support/Herd/config/nvm/versions/node/v25.6.0/bin/firebase deploy --only functions:geminiApi
+[debug] [2026-03-26T01:32:19.058Z] CLI Version:   15.7.0
+[debug] [2026-03-26T01:32:19.058Z] Platform:      darwin
+[debug] [2026-03-26T01:32:19.058Z] Node Version:  v25.6.0
+[debug] [2026-03-26T01:32:19.058Z] Time:          Thu Mar 26 2026 10:32:19 GMT+0900 (Japan Standard Time)
+[debug] [2026-03-26T01:32:19.058Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-03-26T01:32:19.596Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-03-26T01:32:19.597Z] > authorizing via signed-in user (iwaiwa.sumi20040604@gmail.com)
+[debug] [2026-03-26T01:32:19.597Z] [iam] checking project booknook-4162c for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2026-03-26T01:32:19.597Z] Checked if tokens are valid: true, expires at: 1774491879013
+[debug] [2026-03-26T01:32:19.597Z] Checked if tokens are valid: true, expires at: 1774491879013
+[debug] [2026-03-26T01:32:19.598Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/booknook-4162c:testIamPermissions [none]
+[debug] [2026-03-26T01:32:19.598Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/booknook-4162c:testIamPermissions  x-goog-user-project=booknook-4162c
+[debug] [2026-03-26T01:32:19.598Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/booknook-4162c:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-03-26T01:32:19.840Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/booknook-4162c:testIamPermissions 200
+[debug] [2026-03-26T01:32:19.840Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/booknook-4162c:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-03-26T01:32:19.840Z] Checked if tokens are valid: true, expires at: 1774491879013
+[debug] [2026-03-26T01:32:19.840Z] Checked if tokens are valid: true, expires at: 1774491879013
+[debug] [2026-03-26T01:32:19.840Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/booknook-4162c/serviceAccounts/booknook-4162c@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2026-03-26T01:32:19.840Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/booknook-4162c/serviceAccounts/booknook-4162c@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
