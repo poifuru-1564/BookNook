@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
   },
 
   btnOuterContainer: {
-    marginTop: 15,
     width: "80%",
   },
 
@@ -183,6 +182,17 @@ const styles = StyleSheet.create({
   },
   deleteText: {
     color: ColorPalette.warning,
+  },
+
+  // modal
+  closeIcon: {
+    paddingLeft: 10,
+  },
+  modalContainer: {
+    backgroundColor: ColorPalette.background,
+    color: ColorPalette.text,
+    paddingTop: 55,
+    flex: 1,
   },
 });
 

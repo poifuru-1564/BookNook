@@ -1,35 +1,24 @@
 import { ColorPalette, FontSize } from "@/constants/useTheme";
-import AddBook from "@/features/bookshelf/AddBook";
 import DisplayBooks from "@/features/bookshelf/DisplayBooks";
-import { Entypo, Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "expo-router";
 import React, { useState } from "react";
-import {
-  Alert,
-  Button,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const wishlist = () => {
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const navigation = useNavigation();
-  React.useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button onPress={() => setModalVisible(true)} title="+" />
-      ),
-    });
-  });
+  // const navigation = useNavigation();
+  // React.useEffect(() => {
+  //   navigation.setOptions({
+  //     headerRight: () => (
+  //       <Button onPress={() => setModalVisible(true)} title="+" />
+  //     ),
+  //   });
+  // });
 
   return (
     <SafeAreaView style={{ paddingBottom: 40 }}>
-      <Modal visible={isModalVisible} animationType="slide">
+      {/* <Modal visible={isModalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <TouchableOpacity
             onPress={() => {
@@ -49,14 +38,14 @@ const wishlist = () => {
 
           <AddBook setAddBookVisible={setModalVisible} />
         </View>
-      </Modal>
+      </Modal> */}
 
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>Wishlist</Text>
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
+      {/* <View style={styles.headerContainer}> */}
+      <Text style={styles.header}>Wishlist</Text>
+      {/* <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Entypo name="plus" size={20} style={styles.plusIcon} />
-        </TouchableOpacity>
-      </View>
+        </TouchableOpacity> */}
+      {/* </View> */}
       <DisplayBooks bookshelf="wishlist" />
     </SafeAreaView>
   );

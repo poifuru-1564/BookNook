@@ -1,5 +1,5 @@
 import { ColorPalette, FontSize } from "@/constants/useTheme";
-import { AntDesign, Entypo, FontAwesome } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs } from "expo-router";
 import React from "react";
@@ -30,7 +30,7 @@ const TabsLayout = () => {
         name="bookshelf"
         options={{
           title: "Bookshelf",
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
             <MaterialCommunityIcons
               name="bookshelf"
               size={size}
@@ -44,7 +44,7 @@ const TabsLayout = () => {
         name="home"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
             <FontAwesome name="home" size={size} color={color} />
           ),
         }}
@@ -61,18 +61,8 @@ const TabsLayout = () => {
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color, size }: { color: string; size: number }) => (
             <AntDesign name="profile" size={size} color={color} />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="chat"
-        options={{
-          title: "chat",
-          tabBarIcon: ({ color, size }) => (
-            <Entypo name="chat" size={size} color={color} />
           ),
         }}
       />

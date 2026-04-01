@@ -1,15 +1,37 @@
 import { ColorPalette, FontSize } from "@/constants/useTheme";
+import AddBook from "@/features/bookshelf/AddBook";
 import DisplayBooks from "@/features/bookshelf/DisplayBooks";
-import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function bookshelf() {
+  const [isModalVisible, setModalVisible] = useState(false);
+
   return (
-    <SafeAreaView style={{ paddingBottom: 320 }}>
-      <Text style={styles.header}>Bookshelves</Text>
+    <SafeAreaView style={{ paddingBottom: 300 }}>
+      <Modal visible={isModalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <TouchableOpacity
+            onPress={() => setModalVisible(false)}
+            style={{ alignSelf: "flex-start", padding: 5 }}
+          >
+            <Ionicons name="close" size={20} style={styles.closeIcon} />
+          </TouchableOpacity>
+
+          <AddBook setAddBookVisible={setModalVisible} />
+        </View>
+      </Modal>
+
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>Bookshelves</Text>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Entypo name="plus" size={20} style={styles.plusIcon} />
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.linkContainer}>
         <Link href={"/(tabs)/bookshelf/wishlist"}>
           <View style={styles.linkBox}>
@@ -40,7 +62,7 @@ export default function bookshelf() {
           <View
             style={{ flexDirection: "row", gap: 5, alignItems: "baseline" }}
           >
-            <MaterialCommunityIcons name="thought-bubble-outline" size={20} />
+            <Ionicons name="chatbubble-ellipses-outline" size={20} />
             <Text style={{ fontWeight: "500" }}>Get Book Recommendations</Text>
           </View>
         </Link>
@@ -58,6 +80,23 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 20,
     paddingBottom: 10,
+  },
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  plusIcon: {
+    paddingTop: 10,
+    paddingRight: 15,
+  },
+  closeIcon: {
+    paddingLeft: 10,
+  },
+  modalContainer: {
+    backgroundColor: ColorPalette.background,
+    color: ColorPalette.text,
+    paddingTop: 55,
+    flex: 1,
   },
   linkContainer: {
     flexDirection: "row",

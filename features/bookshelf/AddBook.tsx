@@ -11,6 +11,7 @@ import {
   FlatList,
   Keyboard,
   KeyboardEventListener,
+  Modal,
   Text,
   TextInput,
   TouchableOpacity,
@@ -23,14 +24,21 @@ import {
   handleManualInput,
 } from "./bookServices";
 import styles from "./formStyle";
+import Scan from "./Scan";
 
 type Props = {
   setAddBookVisible: (isAddBookVisible: boolean) => void;
   initTitle?: string;
   initAuthor?: string;
+  initISBN?: string;
 };
 
-const AddBook = ({ setAddBookVisible, initAuthor, initTitle }: Props) => {
+const AddBook = ({
+  setAddBookVisible,
+  initAuthor,
+  initTitle,
+  initISBN,
+}: Props) => {
   const [isbn, setISBN] = useState("");
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
@@ -43,6 +51,7 @@ const AddBook = ({ setAddBookVisible, initAuthor, initTitle }: Props) => {
   const [loading, setLoading] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [isScanModalVisible, setScanModalVisible] = useState(false);
   const uid = auth.currentUser?.uid;
 
   const fetchByISBN = async () => {
@@ -255,6 +264,10 @@ const AddBook = ({ setAddBookVisible, initAuthor, initTitle }: Props) => {
       setAuthor(initAuthor);
       setTitle(initTitle);
     }
+
+    if (initISBN !== undefined) {
+      setISBN(initISBN);
+    }
   }, []);
 
   const handleKeyboardShow: KeyboardEventListener = (event) => {
@@ -271,73 +284,43 @@ const AddBook = ({ setAddBookVisible, initAuthor, initTitle }: Props) => {
   }
 
   return (
-    <View style={styles.addContainer}>
-      <Text style={styles.addHeader}>Add Book to Wishlist</Text>
+    <View style={{ flex: 1 }}>
+      <Modal visible={isScanModalVisible} animationType="slide">
+        <Scan setISBN={setISBN} setVisible={setScanModalVisible} />
+      </Modal>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.subTitle}>Search from ISBN</Text>
+      <View style={styles.addContainer}>
+        <Text style={styles.addHeader}>Add Book to Wishlist</Text>
 
-        <View style={styles.isbnSearchContainer}>
-          <TextInput
-            style={styles.isbnInput}
-            placeholder="ISBN-10 / ISBN-13"
-            placeholderTextColor={ColorPalette.muted}
-            keyboardType="number-pad"
-            value={isbn}
-            onChangeText={(text) => setISBN(text)}
-            onSubmitEditing={fetchByISBN}
-            returnKeyType="search"
-            maxLength={13}
-          />
-          <TouchableOpacity style={styles.barcodeIconContainer}>
-            <MaterialCommunityIcons
-              name="barcode-scan"
-              size={25}
-              style={styles.barcodeIcon}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <View style={styles.border}></View>
-
-      {/* google books search */}
-      {!isFailed && !isSearchFin && (
         <View style={styles.inputContainer}>
-          <Text style={styles.subTitle}>Search from title or author</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Title"
-            placeholderTextColor={ColorPalette.muted}
-            value={title}
-            onChangeText={(text) => setTitle(text)}
-            returnKeyType="done"
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Author"
-            placeholderTextColor={ColorPalette.muted}
-            value={author}
-            onChangeText={(text) => setAuthor(text)}
-            returnKeyType="done"
-          />
+          <Text style={styles.subTitle}>Search from ISBN</Text>
 
-          {isManualLinkVisible && (
-            <TouchableOpacity
-              onPress={() => onManualLinkPressed()}
-              style={styles.noMatchContainer}
-            >
-              <Text style={styles.noMatchText}>Manually add a book</Text>
-              <Text style={styles.noMatchSubtext}>
-                * cover image will be not available *
-              </Text>
+          <View style={styles.isbnSearchContainer}>
+            <TextInput
+              style={styles.isbnInput}
+              placeholder="ISBN-10 / ISBN-13"
+              placeholderTextColor={ColorPalette.muted}
+              keyboardType="number-pad"
+              value={isbn}
+              onChangeText={(text) => setISBN(text)}
+              onSubmitEditing={fetchByISBN}
+              maxLength={13}
+            />
+            <TouchableOpacity style={styles.barcodeIconContainer}>
+              <MaterialCommunityIcons
+                name="barcode-scan"
+                size={25}
+                style={styles.barcodeIcon}
+                onPress={() => {
+                  setScanModalVisible(true);
+                }}
+              />
             </TouchableOpacity>
-          )}
-
+          </View>
           <View style={styles.btnOuterContainer}>
             <TouchableOpacity
               style={styles.btnInnerContainer}
-              onPress={fetchByName}
+              onPress={() => fetchByISBN()}
             >
               <View style={styles.btn}>
                 <Feather name="search" style={styles.icon} size={16} />
@@ -346,106 +329,159 @@ const AddBook = ({ setAddBookVisible, initAuthor, initTitle }: Props) => {
             </TouchableOpacity>
           </View>
         </View>
-      )}
 
-      {/* input manually */}
-      {isFailed && !isSearchFin && (
-        <View style={styles.inputContainer}>
-          <Text style={styles.subTitle}>Enter book info manually</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Title"
-            placeholderTextColor={ColorPalette.muted}
-            value={title}
-            onChangeText={(text) => setTitle(text)}
-            returnKeyType="done"
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Author"
-            placeholderTextColor={ColorPalette.muted}
-            value={author}
-            onChangeText={(text) => setAuthor(text)}
-          />
+        <View style={styles.border}></View>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Book Length (optional)"
-            placeholderTextColor={ColorPalette.muted}
-            keyboardType="number-pad"
-            value={pageNum}
-            onChangeText={(text) => setPageNum(text)}
-          />
+        {/* google books search */}
+        {!isFailed && !isSearchFin && (
+          <View style={styles.inputContainer}>
+            <Text style={styles.subTitle}>Search from title or author</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Title"
+              placeholderTextColor={ColorPalette.muted}
+              value={title}
+              onChangeText={(text) => setTitle(text)}
+              returnKeyType="done"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Author"
+              placeholderTextColor={ColorPalette.muted}
+              value={author}
+              onChangeText={(text) => setAuthor(text)}
+              returnKeyType="done"
+            />
 
-          <View style={styles.btnOuterContainer}>
-            <TouchableOpacity
-              style={styles.btnInnerContainer}
-              onPress={() => manualInput()}
-            >
-              <View style={styles.btn}>
-                <Entypo name="plus" style={styles.icon} size={16} />
-                <Text>Save</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
-
-      {/* display serach results */}
-      {isSearchFin && (
-        <View style={styles.resultsContainer}>
-          <Text style={styles.resultsTitle}>Search Results</Text>
-          <FlatList
-            data={searchRes}
-            style={styles.flatListContainer}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <View style={styles.bookContainer}>
-                <TouchableOpacity
-                  style={styles.bookInnerContainer}
-                  onPress={() =>
-                    Alert.alert("", "Add this to your wishlist?", [
-                      { text: "No", style: "cancel" },
-                      { text: "yes", onPress: () => onSelected(item) },
-                    ])
-                  }
-                >
-                  <View style={styles.bookCoverImage}>
-                    <CoverImage url={item.imageLink} />
-                  </View>
-                  <View style={styles.descriptionContainer}>
-                    <Text style={styles.descriptionText}>{item.title}</Text>
-                    <Text style={styles.descriptionText}>{item.author}</Text>
-                    <Text style={styles.descriptionText}>{item.isbn}</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
+            {isManualLinkVisible && (
+              <TouchableOpacity
+                onPress={() => onManualLinkPressed()}
+                style={styles.noMatchContainer}
+              >
+                <Text style={styles.noMatchText}>Manually add a book</Text>
+                <Text style={styles.noMatchSubtext}>
+                  * cover image will be not available *
+                </Text>
+              </TouchableOpacity>
             )}
-            ListFooterComponent={
-              <View style={styles.listFooterContainer}>
-                <View style={styles.btnOuterContainer}>
+
+            <View style={styles.btnOuterContainer}>
+              <TouchableOpacity
+                style={styles.btnInnerContainer}
+                onPress={fetchByName}
+              >
+                <View style={styles.btn}>
+                  <Feather name="search" style={styles.icon} size={16} />
+                  <Text>Search</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {/* input manually */}
+        {isFailed && !isSearchFin && (
+          <View style={styles.inputContainer}>
+            <Text style={styles.subTitle}>Enter book info manually</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Title"
+              placeholderTextColor={ColorPalette.muted}
+              value={title}
+              onChangeText={(text) => setTitle(text)}
+              returnKeyType="done"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Author"
+              placeholderTextColor={ColorPalette.muted}
+              value={author}
+              onChangeText={(text) => setAuthor(text)}
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="Book Length (optional)"
+              placeholderTextColor={ColorPalette.muted}
+              keyboardType="number-pad"
+              value={pageNum}
+              onChangeText={(text) => setPageNum(text)}
+            />
+
+            <View style={styles.btnOuterContainer}>
+              <TouchableOpacity
+                style={styles.btnInnerContainer}
+                onPress={() => manualInput()}
+              >
+                <View style={styles.btn}>
+                  <Entypo name="plus" style={styles.icon} size={16} />
+                  <Text>Save</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {/* display serach results */}
+        {isSearchFin && (
+          <View style={styles.resultsContainer}>
+            <Text style={styles.resultsTitle}>Search Results</Text>
+            <FlatList
+              data={searchRes}
+              style={styles.flatListContainer}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <View style={styles.bookContainer}>
                   <TouchableOpacity
-                    style={styles.btnInnerContainer}
-                    onPress={() => onSearchAgainPressed()}
+                    style={styles.bookInnerContainer}
+                    onPress={() =>
+                      Alert.alert("", "Add this to your wishlist?", [
+                        { text: "No", style: "cancel" },
+                        { text: "yes", onPress: () => onSelected(item) },
+                      ])
+                    }
                   >
-                    <View style={styles.btn}>
-                      <Feather name="search" style={styles.icon} size={16} />
-                      <Text>Search Again</Text>
+                    <View style={styles.bookCoverImage}>
+                      <CoverImage url={item.imageLink} />
+                    </View>
+                    <View style={styles.descriptionContainer}>
+                      <Text style={styles.descriptionText}>{item.title}</Text>
+                      <Text style={styles.descriptionText}>{item.author}</Text>
+                      <Text style={styles.descriptionText}>{item.isbn}</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
+              )}
+              ListFooterComponent={
+                <View style={styles.listFooterContainer}>
+                  <View style={styles.btnOuterContainer}>
+                    <TouchableOpacity
+                      style={styles.btnInnerContainer}
+                      onPress={() => onSearchAgainPressed()}
+                    >
+                      <View style={styles.btn}>
+                        <Feather name="search" style={styles.icon} size={16} />
+                        <Text>Search Again</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
 
-                <Text style={{ padding: 10 }}>Can't find a matching book?</Text>
-                <TouchableOpacity onPress={() => onManuallyBtnPressed()}>
-                  <Text style={styles.noMatchText}>Enter Manually</Text>
-                </TouchableOpacity>
-              </View>
-            }
-          />
-        </View>
-      )}
+                  <Text style={{ padding: 10 }}>
+                    Can't find a matching book?
+                  </Text>
+                  <TouchableOpacity onPress={() => onManuallyBtnPressed()}>
+                    <Text style={styles.noMatchText}>Enter Manually</Text>
+                  </TouchableOpacity>
+                </View>
+              }
+            />
+          </View>
+        )}
 
-      {isKeyboardVisible && <KeyboardHideBtn keyboardHeight={keyboardHeight} />}
+        {isKeyboardVisible && (
+          <KeyboardHideBtn keyboardHeight={keyboardHeight} />
+        )}
+      </View>
     </View>
   );
 };

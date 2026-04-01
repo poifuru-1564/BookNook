@@ -408,7 +408,7 @@ const recommendation = () => {
             <TouchableOpacity
               onPress={() => {
                 Alert.alert("Close?", "Draft will not be saved.", [
-                  { text: "Continue Editing", style: "cancel" },
+                  { text: "Continue", style: "cancel" },
                   {
                     text: "Close",
                     style: "destructive",
