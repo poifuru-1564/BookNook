@@ -1,4 +1,4 @@
-import { ColorPalette } from "@/constants/useTheme";
+import { ColorPalette } from "@/constants/constantValues";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Keyboard, TouchableOpacity, View } from "react-native";
 

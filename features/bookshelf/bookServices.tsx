@@ -1,15 +1,3 @@
-// import {
-//   addDoc,
-//   collection,
-//   deleteDoc,
-//   doc,
-//   getDocs,
-//   query,
-//   updateDoc,
-//   where,
-// } from "@react-native-firebase/firestore";
-// import { db } from "../../firebase";
-// import { quotesList } from "./DisplayQuotes";
 import { Book } from "@/constants/interface";
 import { db } from "@/firebase";
 import {
@@ -26,16 +14,18 @@ import {
 // add book to books collection if !exists
 export const handleAddBook = async (item: Book) => {
   try {
-    await setDoc(
-      doc(db, "books", item.isbn),
-      {
-        title: item.title,
-        author: item.author[0],
-        pageCount: item.pageCount,
-        imageLink: item.imageLink,
-      },
-      { merge: true },
-    );
+    item.pageCount
+      ? await setDoc(doc(db, "books", item.isbn), {
+          title: item.title,
+          author: item.author[0],
+          pageCount: item.pageCount,
+          imageLink: item.imageLink,
+        })
+      : await setDoc(doc(db, "books", item.isbn), {
+          title: item.title,
+          author: item.author[0],
+          imageLink: item.imageLink,
+        });
   } catch (error) {
     console.log("Error handleAddBook(): " + error);
   }
@@ -82,7 +72,7 @@ export const handleManualInput = async (
   uid: string,
   title: string,
   author: string,
-  pageNum?: string,
+  pageNum?: number,
   imageLink?: string,
 ) => {
   try {
@@ -145,7 +135,7 @@ export const handleChangeStatus = async (
 export const handleEditPageCount = async (
   uid: string,
   docId: string,
-  newPageCount: string,
+  newPageCount: number,
 ) => {
   try {
     await updateDoc(doc(db, "users", uid, "bookshelf", docId), {

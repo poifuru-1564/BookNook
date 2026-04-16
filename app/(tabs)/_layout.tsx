@@ -1,5 +1,5 @@
-import { ColorPalette, FontSize } from "@/constants/useTheme";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { ColorPalette, FontSize } from "@/constants/constantValues";
+import { FontAwesome } from "@expo/vector-icons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs } from "expo-router";
 import React from "react";
@@ -14,10 +14,8 @@ const TabsLayout = () => {
         tabBarStyle: {
           backgroundColor: ColorPalette.background,
           paddingTop: 12,
-          borderTopWidth: 1,
           borderStyle: "solid",
           borderTopColor: ColorPalette.muted,
-          height: 80,
         },
         tabBarLabelStyle: {
           fontSize: FontSize.sub,
@@ -62,7 +60,7 @@ const TabsLayout = () => {
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }: { color: string; size: number }) => (
-            <AntDesign name="profile" size={size} color={color} />
+            <FontAwesome name="user" size={size} color={color} />
           ),
         }}
       />

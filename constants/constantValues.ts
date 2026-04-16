@@ -1,10 +1,11 @@
 export const ColorPalette = {
   background: "#f7f5f4",
-  surface: "#fef6f6",
+
   text: "#000000",
+  grey: "#484848",
   muted: "#979da1",
   success: "#4165dc",
-  card: "#ffffe7",
+  card: "#FBF8EC",
   warning: "#e34141",
   blue: "#3e547c",
   blueMuted: "#4c6797",

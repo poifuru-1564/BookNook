@@ -9,7 +9,7 @@ import {
   where,
 } from "@react-native-firebase/firestore";
 import { db } from "../../firebase";
-import { quotesList } from "./DisplayQuotes";
+import { quote } from "./components/DisplayQuotes";
 
 export const handleAddQuote = async (
   uid: string,
@@ -41,7 +41,7 @@ export const handleDeleteQuote = async (docID: string) => {
 
 export const handleEditQuotes = async (
   docID: string,
-  items: Partial<quotesList>,
+  items: Partial<quote>,
 ) => {
   await updateDoc(doc(db, "quotes", docID), items);
 };
@@ -50,4 +50,40 @@ export const handleGetQuotes = async (uid: string) => {
   const q = query(collection(db, "quotes"), where("userID", "==", uid));
 
   return await getDocs(q);
+};
+
+export const handleFilterByAuthor = async (
+  uid: string,
+  searchString: string,
+) => {
+  try {
+    const q = query(
+      collection(db, "quotes"),
+      where("userID", "==", uid),
+      where("author", "==", searchString),
+    );
+
+    return await getDocs(q);
+  } catch (error: any) {
+    console.log("handleFilterByAuthor: " + error);
+    throw new Error(error.message);
+  }
+};
+
+export const handleFilterByTitle = async (
+  uid: string,
+  searchString: string,
+) => {
+  try {
+    const q = query(
+      collection(db, "quotes"),
+      where("userID", "==", uid),
+      where("title", "==", searchString),
+    );
+
+    return await getDocs(q);
+  } catch (error: any) {
+    console.log("handleFilterByTitle: " + error);
+    throw new Error(error.message);
+  }
 };

@@ -1,9 +1,10 @@
+import Loading from "@/components/Loading";
+import { btnStyles } from "@/components/MyButton";
+import { ColorPalette, FontSize } from "@/constants/constantValues";
 import { userBook } from "@/constants/interface";
-import { ColorPalette, FontSize } from "@/constants/useTheme";
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
-  ActivityIndicator,
   Alert,
   StyleSheet,
   Text,
@@ -13,45 +14,36 @@ import {
 } from "react-native";
 import { Rating } from "react-native-ratings";
 import { auth } from "../../../firebase";
-import { handleAddReview } from "../cardServices";
+import useReview from "../useReview";
 
 type Props = {
   book: userBook | undefined;
   setModalVisible: (isModalVisible: boolean) => void;
+  initial: boolean;
 };
 
-const Review = ({ book, setModalVisible }: Props) => {
-  const [loading, setLoading] = useState(false);
-  const [newReview, setNewReview] = useState(book?.review || "");
-  const [newRating, setNewRating] = useState("");
-  const [isEditable, setEditable] = useState(false);
+const Review = ({ book, setModalVisible, initial }: Props) => {
   const uid = auth.currentUser?.uid;
+  const {
+    loading,
+    newReview,
+    setNewReview,
+    setNewRating,
+    isEditable,
+    setEditable,
+    review,
+    discard,
+  } = useReview(uid, initial, book, setModalVisible);
 
-  if (book === undefined) {
-    setModalVisible(false);
-    Alert.alert("Error", "Failed to fetch book detail. Please try again");
-  }
-
-  const ratingCompleted = (rating: string) => {
-    setNewRating(rating);
-  };
-
-  const editReview = async () => {
-    if (uid === undefined || book?.docId === undefined) return;
-    setLoading(true);
-    try {
-      await handleAddReview(uid, book?.docId, newReview, newRating);
-      setEditable(false);
-      Alert.alert("", "Changes saved successfully");
-    } catch (error) {
-      Alert.alert("Failed to update review. Please try again.");
+  useEffect(() => {
+    if (book === undefined) {
+      setModalVisible(false);
+      Alert.alert("Error", "Failed to fetch book detail. Please try again");
     }
-
-    setLoading(false);
-  };
+  }, [book]);
 
   if (loading) {
-    return <ActivityIndicator />;
+    return <Loading />;
   }
 
   return (
@@ -66,7 +58,7 @@ const Review = ({ book, setModalVisible }: Props) => {
           imageSize={25}
           ratingTextColor={ColorPalette.text}
           style={styles.rating}
-          onFinishRating={ratingCompleted}
+          onFinishRating={(rating: number) => setNewRating(rating)}
         />
       </View>
 
@@ -77,7 +69,7 @@ const Review = ({ book, setModalVisible }: Props) => {
           editable={isEditable}
           value={newReview}
           onChangeText={(text) => setNewReview(text)}
-          style={{ paddingHorizontal: 15 }}
+          style={styles.reviewTextInput}
         />
 
         <TouchableOpacity>
@@ -90,37 +82,36 @@ const Review = ({ book, setModalVisible }: Props) => {
             />
           )}
         </TouchableOpacity>
+      </View>
 
-        <TouchableOpacity>
-          {isEditable && (
-            <MaterialIcons
-              name="cancel"
-              size={FontSize.text}
-              style={styles.editIcon}
+      {isEditable && (
+        <View style={styles.btnContainer}>
+          <View style={styles.btnOuterContainer}>
+            <TouchableOpacity
+              style={styles.btnRedInnerContainer}
               onPress={() =>
                 Alert.alert("Discard Changes? ", "Changes will not be saved", [
                   { text: "Keep Editing", style: "cancel" },
                   {
                     text: "Discard Changes",
-                    onPress: () => setEditable(!isEditable),
+                    onPress: () => {
+                      discard();
+                    },
                   },
                 ])
               }
-            />
-          )}
-        </TouchableOpacity>
-      </View>
-
-      {isEditable && (
-        <View style={styles.btnOuterContainer}>
-          <TouchableOpacity
-            style={styles.btnInnerContainer}
-            onPress={() => editReview()}
-          >
-            <View style={styles.btn}>
-              <Text>Save</Text>
-            </View>
-          </TouchableOpacity>
+            >
+              <Text style={styles.btnRedText}>Discard Changes</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.btnOuterContainer}>
+            <TouchableOpacity
+              style={btnStyles.btnInnerContainer}
+              onPress={() => review()}
+            >
+              <Text style={styles.btnText}>Save</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </View>
@@ -136,14 +127,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   title: {
-    fontSize: 20,
+    fontSize: FontSize.large,
     fontWeight: "600",
     alignSelf: "flex-start",
   },
   reviewContainer: {
-    paddingVertical: 5,
     borderWidth: 0.3,
     borderColor: ColorPalette.muted,
+    borderRadius: 5,
     width: "100%",
   },
   reviewContainerText: {
@@ -152,49 +143,45 @@ const styles = StyleSheet.create({
   editIcon: {
     color: ColorPalette.muted,
     alignSelf: "flex-end",
-    paddingRight: 8,
+    paddingRight: 5,
     paddingBottom: 3,
+    paddingTop: 5,
   },
   rating: {
     marginBottom: 10,
     paddingVertical: 10,
   },
+  reviewTextInput: {
+    padding: 10,
+    lineHeight: 16,
+    minHeight: 68,
+  },
 
-  // edit review
-  // reviewInput: {
-  //   width: "100%",
-  //   height: 150,
-  //   borderColor: ColorPalette.muted,
-  //   borderStyle: "solid",
-  //   borderWidth: 0.5,
-  //   padding: 9,
-  //   marginTop: 10,
-  //   fontSize: 12,
-  // },
-  // addBtn: {
-  //   marginTop: 10,
-  //   borderStyle: "solid",
-  //   borderWidth: 0.5,
-  //   borderColor: ColorPalette.muted,
-  //   padding: 7,
-  //   paddingRight: 12,
-  //   paddingLeft: 9,
-  //   borderRadius: 5,
-  // },
+  btnContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
 
   btnOuterContainer: {
-    width: "80%",
+    width: "48%",
     alignSelf: "center",
   },
 
-  btnInnerContainer: {
+  btnText: {
+    fontSize: FontSize.sub,
+  },
+  btnRedInnerContainer: {
     marginTop: 15,
     borderStyle: "solid",
     borderWidth: 0.5,
-    borderColor: ColorPalette.muted,
+    borderColor: ColorPalette.warning,
     padding: 7,
     borderRadius: 5,
+    alignItems: "center",
   },
-
-  btn: { flexDirection: "row", alignSelf: "center" },
+  btnRedText: {
+    fontSize: FontSize.sub,
+    color: ColorPalette.warning,
+  },
 });

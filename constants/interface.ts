@@ -5,12 +5,12 @@ export interface userBook {
 
   title?: string;
   author?: string;
-  currentPage?: string;
+  currentPage?: number;
   rating?: number;
   review?: string;
   startedAt?: string;
   manual?: boolean;
-  pageCount?: string;
+  pageCount?: number;
   lastRead?: string;
 }
 

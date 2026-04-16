@@ -1,12 +1,18 @@
 import { db } from "@/firebase";
-import { doc, Timestamp, updateDoc } from "@react-native-firebase/firestore";
+import {
+  doc,
+  getDoc,
+  increment,
+  Timestamp,
+  updateDoc,
+} from "@react-native-firebase/firestore";
 import { handleIncStatsProgress } from "../profile/services";
 
 export const handleAddReview = async (
   uid: string,
   bookID: string,
   review: string,
-  rating: string,
+  rating: number,
 ) => {
   try {
     const ref = doc(db, "users", uid, "bookshelf", bookID);
@@ -20,15 +26,12 @@ export const handleAddReview = async (
 };
 
 export const handleStartBook = async (uid: string, bookID: string) => {
-  // change books status to "progress"
-  // increment booksInProgress field in users -> uid -> user's doc
-  // set startedAt to today's date ( bookshelf -> book -> startedAt)
-
   try {
     const ref = doc(db, "users", uid, "bookshelf", bookID);
     await updateDoc(ref, {
       currentPage: 0,
       startedAt: Timestamp.now().toDate(),
+      status: "progress",
     });
 
     await handleIncStatsProgress(uid);
@@ -37,30 +40,59 @@ export const handleStartBook = async (uid: string, bookID: string) => {
   }
 };
 
-export const handleUpdatePage = async (
+export const handleUpdateProgress = async (
   uid: string,
   bookID: string,
-  newPage: string,
+  newPage: number,
 ) => {
-  // when returned
-  // update currentPage to newPage ( bookshelf -> book -> currentPage)
-  try {
-    const ref = doc(db, "users", uid, "bookshelf", bookID);
-    await updateDoc(ref, {
-      currentPage: newPage,
-    });
-  } catch (error) {
-    console.log("handleUpdatePage: " + error);
-  }
+  const ref = doc(db, "users", uid, "bookshelf", bookID);
+  await updateDoc(ref, {
+    currentPage: newPage,
+    lastRead: Timestamp.now().toDate().toLocaleDateString("en-US"),
+  });
 };
 
 export const handleUpdateDate = async (uid: string, bookID: string) => {
-  try {
-    const ref = doc(db, "users", uid, "bookshelf", bookID);
+  const ref = doc(db, "users", uid, "bookshelf", bookID);
+  await updateDoc(ref, {
+    lastRead: Timestamp.now().toDate().toLocaleDateString("en-US"),
+  });
+};
+
+// update stats after reading
+export const handleUpdateReadingStats = async (
+  uid: string,
+  pagesRead: number,
+) => {
+  const ref = doc(db, "users", uid);
+  const today = new Date();
+  let d = today.getDay() - 1;
+  if (d === -1) d = 6;
+
+  const prev = await getDoc(ref);
+
+  const lastRead = new Date(prev.data()?.lastReadDate);
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const pages = pagesRead ? pagesRead : 0;
+
+  const isYesterday = lastRead.toDateString() === yesterday.toDateString();
+  const isToday = lastRead.toDateString() === today.toDateString();
+
+  if (isToday) {
     await updateDoc(ref, {
-      lastRead: Timestamp.now().toDate().toLocaleDateString("en-US"),
+      totalPages: increment(pages),
+      lastReadDate: today.toISOString(),
+      [`weeklyStats.${d}.hasRead`]: true,
+      [`weeklyStats.${d}.numOfPages`]: increment(pages),
     });
-  } catch (error) {
-    console.log("handleUpdateDate: " + error);
+  } else {
+    await updateDoc(ref, {
+      totalPages: increment(pages),
+      streakCount: isYesterday ? increment(1) : 1,
+      lastReadDate: today.toISOString(),
+      [`weeklyStats.${d}.hasRead`]: true,
+      [`weeklyStats.${d}.numOfPages`]: increment(pages),
+    });
   }
 };

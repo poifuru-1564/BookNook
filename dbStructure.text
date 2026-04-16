@@ -17,6 +17,10 @@ books (collection)
 users
   └── userId
         ├── username
+        ├── yearStat{year} = {goal: number, current: number}
+        ├── weeklyStats
+        ├── streakCount
+        ├── lastReadDate
         ├── finishedBooks
         ├── totalPages
         ├── booksInProgress

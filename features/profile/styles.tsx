@@ -1,48 +1,59 @@
-import { ColorPalette, FontSize } from "@/constants/useTheme";
+import { ColorPalette, FontSize } from "@/constants/constantValues";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  header: {
-    fontSize: FontSize.title,
-    fontWeight: "600",
-    paddingTop: 10,
-    paddingLeft: 20,
-    paddingBottom: 10,
-  },
-  settingIcon: {
-    paddingRight: 15,
-    paddingTop: 12,
+  refreshIcon: {
+    color: ColorPalette.blue,
+    position: "absolute",
+    bottom: 0,
   },
 
-  calendarContainer: {
-    height: 200,
-    width: "80%",
-    borderWidth: 1,
-    borderColor: ColorPalette.muted,
-    marginBottom: 20,
-    marginTop: 10,
-  },
-  statsContainer: {
+  container: {
     alignItems: "center",
-    width: "80%",
-    borderWidth: 1,
-    borderColor: ColorPalette.muted,
-    paddingTop: 10,
-    paddingBottom: 20,
+    width: "100%",
   },
-  statsTitle: {
+
+  streakContainer: {
+    width: "100%",
+    marginVertical: 10,
+  },
+  subTitle: {
     fontSize: FontSize.large,
     fontWeight: "600",
+    paddingLeft: 20,
+  },
+
+  // streaks
+
+  innerContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
+
+  circleIcon: {
+    paddingVertical: 5,
+  },
+  listContainer: {
+    alignSelf: "center",
+    paddingTop: 15,
+  },
+
+  // stats
+  statsContainer: {
+    marginTop: 25,
+  },
+
+  statsRow: {
+    flexDirection: "row",
+    marginBottom: 5,
+    width: "100%",
   },
   stats: {
-    marginTop: 10,
-    width: "80%",
     flexDirection: "row",
     padding: 12,
+    justifyContent: "flex-start",
+    width: "50%",
   },
   statsIcon: {
     color: ColorPalette.success,
@@ -50,7 +61,6 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
 
-  statsTextContainer: {},
   statsText: {
     fontSize: FontSize.large,
     color: ColorPalette.text,
@@ -59,13 +69,17 @@ const styles = StyleSheet.create({
   statsSubtext: {
     fontSize: FontSize.sub,
     color: ColorPalette.muted,
+    paddingTop: 2,
   },
 
   //   settings page
-  container: {
-    backgroundColor: ColorPalette.background,
+
+  logoutContainer: {
+    marginTop: 20,
+    width: "100%",
     alignItems: "center",
   },
+
   usernameContainer: {
     alignItems: "baseline",
     width: "80%",
@@ -76,7 +90,6 @@ const styles = StyleSheet.create({
   },
   editBtn: {
     borderWidth: 0.5,
-    borderStyle: "solid",
     borderRadius: 5,
     paddingTop: 8,
     paddingBottom: 8,
@@ -88,7 +101,6 @@ const styles = StyleSheet.create({
   redBtnContainer: {
     borderColor: ColorPalette.warning,
     borderWidth: 0.5,
-    borderStyle: "solid",
     borderRadius: 5,
     paddingTop: 8,
     paddingBottom: 8,
@@ -108,7 +120,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: ColorPalette.muted,
     borderWidth: 0.5,
-    padding: 15,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
     marginTop: 20,
     marginBottom: 20,
     alignItems: "center",
@@ -119,12 +132,11 @@ const styles = StyleSheet.create({
   },
   usernameInput: {
     width: "90%",
-    padding: 5,
-    borderColor: ColorPalette.text,
+    padding: 8,
+    borderColor: ColorPalette.muted,
     borderWidth: 0.5,
-    borderStyle: "solid",
     borderRadius: 5,
-    marginBottom: 10,
+    marginBottom: 15,
   },
   updateBtnContainer: {
     flexDirection: "row",
@@ -133,9 +145,8 @@ const styles = StyleSheet.create({
   },
   updateBtn: {
     borderWidth: 0.5,
-    borderColor: ColorPalette.text,
+    borderColor: ColorPalette.muted,
     borderRadius: 5,
-    borderStyle: "solid",
     padding: 5,
     width: "45%",
     alignItems: "center",

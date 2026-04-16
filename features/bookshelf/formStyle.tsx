@@ -1,4 +1,4 @@
-import { ColorPalette, FontSize } from "@/constants/useTheme";
+import { ColorPalette, FontSize } from "@/constants/constantValues";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -16,31 +16,12 @@ const styles = StyleSheet.create({
   input: {
     width: "80%",
     borderColor: ColorPalette.muted,
-    borderStyle: "solid",
+    borderRadius: 5,
     borderWidth: 0.5,
     padding: 7,
     marginTop: 10,
     fontSize: FontSize.text,
   },
-
-  btnOuterContainer: {
-    width: "80%",
-  },
-
-  btnInnerContainer: {
-    marginTop: 15,
-    borderStyle: "solid",
-    borderWidth: 0.5,
-    borderColor: ColorPalette.muted,
-    padding: 7,
-    borderRadius: 5,
-  },
-
-  btn: { flexDirection: "row", alignSelf: "center" },
-  icon: {
-    paddingRight: 5,
-  },
-
   //   AddBook
 
   subTitle: {
@@ -53,7 +34,7 @@ const styles = StyleSheet.create({
   isbnInput: {
     width: "80%",
     borderColor: ColorPalette.muted,
-    borderStyle: "solid",
+    borderRadius: 5,
     borderWidth: 0.5,
     padding: 7,
     marginTop: 10,
@@ -76,7 +57,6 @@ const styles = StyleSheet.create({
     width: "90%",
     borderTopWidth: 1,
     borderTopColor: ColorPalette.muted,
-    borderStyle: "solid",
     marginTop: 25,
     marginBottom: 20,
   },
@@ -152,7 +132,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: "80%",
     borderColor: ColorPalette.muted,
-    borderStyle: "solid",
+    borderRadius: 5,
     borderWidth: 0.5,
     padding: 7,
     marginTop: 10,
@@ -168,7 +148,7 @@ const styles = StyleSheet.create({
   quotePageInput: {
     width: "48%",
     borderColor: ColorPalette.muted,
-    borderStyle: "solid",
+    borderRadius: 5,
     borderWidth: 0.5,
     padding: 7,
     marginTop: 10,
