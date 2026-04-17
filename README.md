@@ -2,49 +2,41 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+## Project Overview
 
-1. Install dependencies
 
-   ```bash
-   npm install
-   ```
 
-2. Start the app
+## Features
 
-   ```bash
-   npx expo start
-   ```
+- Customizable Bookshelf: Add books to your own bookshelf by scanning barcodes or search books by its title or author
+- Personal Vault: Save reviews and your favorite quotes
+- Book Recommendation: Suggests books based on user's preferences, such as genres, length, and keywords
+- Habit Traker & Stats: Keeps track of user's reading activities
 
-In the output, you'll find options to open the app in a
+## Screenshots
+<img width="1179" height="2388" alt="profilescreen" src="https://github.com/user-attachments/assets/fb34d98b-6c01-4b7f-94d1-997165dbad29" />
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+<img width="1179" height="2438" alt="homescreen" src="https://github.com/user-attachments/assets/1af8d337-923d-489a-8039-d45a3f9ff404" />
+<img width="1160" height="2378" alt="shelfscreen" src="https://github.com/user-attachments/assets/82b56f25-97c4-44ff-91e1-012eb7880db8" />
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+## Tech Stack
 
-When you're ready, run:
+- **React Native**
+- **Expo**
+- **Firebase**
 
-```bash
-npm run reset-project
-```
+## External API's
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- [Google Books API][https://developers.google.com/books] for retrieving metadata
+- [Gemini API][https://ai.google.dev/gemini-api/docs] for book recommendation feature
+      Model used: Gemini 2.5 Flash
 
-## Learn more
+## Sources
 
-To learn more about developing your project with Expo, look at the following resources:
+- [React Native Doc][https://reactnative.dev/docs/getting-started]
+- [Expo Doc][https://docs.expo.dev]
+- [Firebase Doc][https://firebase.google.com/docs]
+- [Nano Banana 2][https://gemini.google/jp/overview/image-generation/] to generate app icon
+  
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
