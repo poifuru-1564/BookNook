@@ -12,7 +12,7 @@ Book Nook is a personalized reading tracking app designed to help users build a 
 
 ## Screenshots
 
-<img width="600" height="400" alt="screens" src="https://github.com/user-attachments/assets/d1df72c6-7d4e-409d-8b1d-78c2adb41bae" />
+<img  height="500" alt="screens" src="https://github.com/user-attachments/assets/d1df72c6-7d4e-409d-8b1d-78c2adb41bae" />
 
 
 ## Tech Stack
