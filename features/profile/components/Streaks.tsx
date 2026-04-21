@@ -2,8 +2,8 @@ import { ColorPalette } from "@/constants/constantValues";
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, Text, View } from "react-native";
-import { stat } from "../screens/ProfileScreen";
 import styles from "../styles";
+import { stat } from "../useProfile";
 import useStreaks from "../useStreaks";
 type Props = {
   weekRecords?: stat[];

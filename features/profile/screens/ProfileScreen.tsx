@@ -11,10 +11,7 @@ import Stats from "../components/Stats";
 import Streaks from "../components/Streaks";
 import styles from "../styles";
 import useProfile from "../useProfile";
-export type stat = {
-  hasRead: boolean;
-  numOfPages: number | string;
-};
+
 const ProfileScreen = () => {
   const {
     total,

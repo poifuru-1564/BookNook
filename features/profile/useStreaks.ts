@@ -1,7 +1,7 @@
 import { auth } from "@/firebase";
 import { useEffect, useState } from "react";
-import { stat } from "./screens/ProfileScreen";
-import { handleWeeklyReset } from "./services";
+import { handleWeeklyReset } from "./profileServices";
+import { stat } from "./useProfile";
 
 const useStreaks = (weekRecords: stat[] | undefined) => {
   const [monday, setMonday] = useState("");

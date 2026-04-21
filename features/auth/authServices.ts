@@ -121,3 +121,20 @@ export const handleResetPassword = async (email: string) => {
     } else throw new Error("Failed to send reset email");
   }
 };
+
+// sign Out
+export const handleSignOut = async () => {
+  try {
+    const providerId = auth.currentUser?.providerId;
+    if (providerId === "google.com") {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+    }
+
+    // logout from firebase
+    await signOut(auth);
+    alert("Successfully signed out. See you next time!");
+  } catch (error: any) {
+    alert("Error: " + error.message);
+  }
+};

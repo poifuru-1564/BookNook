@@ -34,8 +34,8 @@ export const styles = StyleSheet.create({
   loginOuterContainer: {
     alignItems: "center",
     backgroundColor: ColorPalette.card,
+    justifyContent: "center",
     flex: 1,
-    paddingTop: 150,
   },
   iconPic: {
     height: 150,

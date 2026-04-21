@@ -1,8 +1,13 @@
+import { userBook } from "@/constants/interface";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert } from "react-native";
 import { handleUpdateProgress, handleUpdateReadingStats } from "./cardServices";
-import { Items } from "./components/Card";
+
+export type Items = {
+  book: userBook;
+  isBorrowed: boolean;
+};
 
 const useCardActions = (
   uid: string | undefined,

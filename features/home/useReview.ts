@@ -2,7 +2,10 @@ import { userBook } from "@/constants/interface";
 import { useState } from "react";
 import { Alert } from "react-native";
 import { handleChangeStatus } from "../bookshelf/bookServices";
-import { handleStatsAfterReview, handleYearlyTotal } from "../profile/services";
+import {
+  handleStatsAfterReview,
+  handleYearlyTotal,
+} from "../profile/profileServices";
 import { handleAddReview, handleUpdateDate } from "./cardServices";
 
 const useReview = (

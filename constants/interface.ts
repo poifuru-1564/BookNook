@@ -41,3 +41,12 @@ export interface Book {
   pageCount: number;
   imageLink: string;
 }
+
+export interface quote {
+  docID: string;
+  quote: string;
+  title: string;
+  author: string;
+  page: string;
+  line: string;
+}

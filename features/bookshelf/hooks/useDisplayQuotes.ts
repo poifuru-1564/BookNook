@@ -1,8 +1,8 @@
+import { quote } from "@/constants/interface";
 import { auth } from "@/firebase";
 import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { quote } from "../components/DisplayQuotes";
 import {
   handleFilterByAuthor,
   handleFilterByTitle,

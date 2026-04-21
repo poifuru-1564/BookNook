@@ -1,7 +1,7 @@
 import { auth } from "@/firebase";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { handleYearlyGoal } from "./services";
+import { handleYearlyGoal } from "./profileServices";
 
 const useGoals = (yearlyGoal: number | undefined, yearCurrent: number) => {
   const [isFormVisible, setFormVisible] = useState(false);

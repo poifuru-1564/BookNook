@@ -11,7 +11,7 @@ export const StartBookScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   return (
-    <SafeAreaView style={{ paddingBottom: 70 }}>
+    <SafeAreaView style={{ paddingBottom: 70, flex: 1 }}>
       <Modal visible={isModalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <ModalCloseBtn setModalVisible={setModalVisible} withAlert={false} />
@@ -31,7 +31,7 @@ export const StartBookScreen = () => {
         Pick your next book from your bookshelf
       </Text>
 
-      <View style={styles.listContainer}>
+      <View style={{ flex: 1 }}>
         <DisplayBooks bookshelf="wishlist" bookshelf2="finished" />
       </View>
     </SafeAreaView>
@@ -73,9 +73,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     fontSize: 13,
   },
-  listContainer: {
-    paddingBottom: 140,
-  },
+
   modalContainer: {
     backgroundColor: ColorPalette.background,
     color: ColorPalette.text,

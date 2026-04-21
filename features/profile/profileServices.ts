@@ -1,12 +1,10 @@
-import { deleteUser, signOut } from "@react-native-firebase/auth";
 import {
   doc,
   getDoc,
   increment,
   updateDoc,
 } from "@react-native-firebase/firestore";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import { auth, db } from "../../firebase";
+import { db } from "../../firebase";
 
 // doc for current User
 export const handleGetProfile = async (uid: string) => {
@@ -15,47 +13,6 @@ export const handleGetProfile = async (uid: string) => {
     return await getDoc(ref);
   } catch (error) {
     console.log("handleGetProfile: " + error);
-  }
-};
-
-//   update username
-export const handleUpdateUsername = async (
-  uid: string,
-  newUserName: string,
-) => {
-  const ref = doc(db, "users", uid);
-  await updateDoc(ref, {
-    username: newUserName,
-  });
-};
-// delete account and all data associated to the user
-export const handleDeleteAccount = async () => {
-  const user = auth.currentUser;
-  if (user != null) {
-    deleteUser(user)
-      .then(() => {
-        alert("Account Deleted");
-      })
-      .catch((error) => {
-        alert("Error: " + error.message);
-      });
-  }
-};
-
-// sign Out
-export const handleSignOut = async () => {
-  try {
-    const providerId = auth.currentUser?.providerId;
-    if (providerId === "google.com") {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-    }
-
-    // logout from firebase
-    await signOut(auth);
-    alert("Successfully signed out. See you next time!");
-  } catch (error: any) {
-    alert("Error: " + error.message);
   }
 };
 

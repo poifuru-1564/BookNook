@@ -17,7 +17,6 @@ const CreateAccountScreen = () => {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
-    setLoading(true);
     const validInput = await validatePassword(email, password);
     if (!validInput.isValid) {
       Alert.alert("Invalid Inputs", validInput.message);
@@ -25,6 +24,7 @@ const CreateAccountScreen = () => {
     }
 
     try {
+      setLoading(false);
       const success = await handleCreateAccount(email.trim(), password.trim());
       if (success) {
         Alert.alert(
@@ -34,9 +34,12 @@ const CreateAccountScreen = () => {
         router.dismiss(1);
       } else {
         Alert.alert("Failed", "Failed to create account. Please try again");
+        setLoading(false);
+        return;
       }
     } catch (error: any) {
       Alert.alert("Failed" + error.message);
+      setLoading(false);
     }
     setLoading(false);
   };

@@ -1,7 +1,7 @@
+import { quote } from "@/constants/interface";
 import { auth } from "@/firebase";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert } from "react-native";
-import { quote } from "../components/DisplayQuotes";
 import {
   handleAddQuote,
   handleDeleteQuote,
@@ -12,29 +12,13 @@ const useAddQuotes = (
   list: quote | undefined,
   setEditVisible: (isVisible: boolean) => void,
 ) => {
-  let iniQ: string = "",
-    iniT: string = "",
-    iniA: string = "",
-    iniP: string = "",
-    iniL: string = "",
-    isEdit: boolean = false;
+  const isEdit = !!list;
 
-  useEffect(() => {
-    if (list !== undefined) {
-      isEdit = true;
-      iniQ = list.quote;
-      iniT = list.title;
-      iniA = list.author;
-      iniP = list.page;
-      iniL = list.line;
-    }
-  }, []);
-
-  const [quote, setQuote] = useState(iniQ);
-  const [title, setTitle] = useState(iniT);
-  const [author, setAuthor] = useState(iniA);
-  const [page, setPage] = useState(iniP);
-  const [line, setLine] = useState(iniL);
+  const [quote, setQuote] = useState(list?.quote || "");
+  const [title, setTitle] = useState(list?.title || "");
+  const [author, setAuthor] = useState(list?.author || "");
+  const [page, setPage] = useState(list?.page || "");
+  const [line, setLine] = useState(list?.line || "");
 
   const uid = auth.currentUser?.uid;
 
@@ -78,21 +62,12 @@ const useAddQuotes = (
 
   const editQuote = async () => {
     const fields: Partial<quote> = {};
-    if (quote !== iniQ) {
-      fields.quote = quote;
-    }
-    if (title !== iniT) {
-      fields.title = title;
-    }
-    if (author !== iniA) {
-      fields.author = author;
-    }
-    if (page !== iniP) {
-      fields.page = page;
-    }
-    if (line !== iniL) {
-      fields.line = line;
-    }
+    if (quote !== list?.quote) fields.quote = quote;
+    if (title !== list?.title) fields.title = title;
+    if (author !== list?.author) fields.author = author;
+    if (page !== list?.page) fields.page = page;
+    if (line !== list?.line) fields.line = line;
+
     console.log(fields);
 
     if (Object.keys(fields).length === 0) {

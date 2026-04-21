@@ -16,9 +16,9 @@ const useAddBook = (
   initTitle: string | undefined,
   initISBN: string | undefined,
 ) => {
-  const [isbn, setISBN] = useState("");
-  const [author, setAuthor] = useState("");
-  const [title, setTitle] = useState("");
+  const [isbn, setISBN] = useState(initISBN ?? "");
+  const [author, setAuthor] = useState(initAuthor ?? "");
+  const [title, setTitle] = useState(initTitle ?? "");
   const [pageNum, setPageNum] = useState(""); // only for manual inputs
 
   const [searchRes, setSearchRes] = useState<Book[]>([]);
@@ -39,7 +39,6 @@ const useAddBook = (
       return;
     }
     const param = "isbn:" + isbn.trim();
-    console.log(param);
 
     // start search
     setLoading(true);
@@ -48,15 +47,11 @@ const useAddBook = (
     if (!doc) {
       fetchBook(param);
     } else {
-      console.log(
-        "fetchByISBN() Already exist in books collection. -> onSelected",
-      );
       // already in the books collection -> display -> select
       const data = doc.data();
       if (data === undefined) {
         fetchBook(param);
       } else {
-        console.log("Found in book's collection");
         setSearchRes([
           {
             isbn: doc.id,
@@ -90,8 +85,6 @@ const useAddBook = (
       }
     }
 
-    console.log(param);
-
     setLoading(true);
     fetchBook(param);
   };
@@ -101,6 +94,7 @@ const useAddBook = (
       const base =
         "https://asia-northeast1-booknook-4162c.cloudfunctions.net/bookApi";
       const res = await fetch(`${base}?q=${param}`);
+      console.log(res.status);
       if (!res.ok) {
         Alert.alert(
           "",

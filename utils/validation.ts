@@ -1,4 +1,4 @@
-export const validatePassword = async (email: string, password: string) => {
+export const validatePassword = (email: string, password: string) => {
   if (email.trim().length === 0 || password.trim().length === 0) {
     return { isValid: false, message: "Enter both Email & Password" };
   } else if (password.trim().length < 8) {

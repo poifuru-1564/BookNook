@@ -6,7 +6,7 @@ import {
   Timestamp,
   updateDoc,
 } from "@react-native-firebase/firestore";
-import { handleIncStatsProgress } from "../profile/services";
+import { handleIncStatsProgress } from "../profile/profileServices";
 
 export const handleAddReview = async (
   uid: string,

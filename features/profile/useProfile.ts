@@ -1,7 +1,11 @@
 import { auth } from "@/firebase";
 import { useEffect, useState } from "react";
-import { stat } from "./screens/ProfileScreen";
-import { handleGetProfile } from "./services";
+import { handleGetProfile } from "./profileServices";
+
+export type stat = {
+  hasRead: boolean;
+  numOfPages: number | string;
+};
 
 const useProfile = () => {
   const [total, setTotal] = useState(0);

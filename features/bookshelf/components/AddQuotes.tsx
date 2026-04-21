@@ -1,11 +1,11 @@
 import KeyboardHideBtn from "@/components/KeyboardHideBtn";
 import MyButton from "@/components/MyButton";
 import { ColorPalette } from "@/constants/constantValues";
+import { quote } from "@/constants/interface";
 import React from "react";
 import { Text, TextInput, View } from "react-native";
 import styles from "../formStyle";
 import useAddQuotes from "../hooks/useAddQuotes";
-import { quote } from "./DisplayQuotes";
 
 type Props = {
   list?: quote;

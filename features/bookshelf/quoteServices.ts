@@ -1,3 +1,4 @@
+import { quote } from "@/constants/interface";
 import {
   addDoc,
   collection,
@@ -9,29 +10,28 @@ import {
   where,
 } from "@react-native-firebase/firestore";
 import { db } from "../../firebase";
-import { quote } from "./components/DisplayQuotes";
 
 export const handleAddQuote = async (
   uid: string,
-  q: string,
-  t: string,
-  a: string,
-  p: string,
-  l: string,
+  quote: string,
+  title: string,
+  author: string,
+  pageNum: string,
+  lineNum: string,
 ) => {
   const ref = collection(db, "quotes");
   const docRef = await addDoc(ref, {
     userID: uid,
-    quote: q,
-    title: t,
-    author: a,
+    quote: quote,
+    title: title,
+    author: author,
   });
 
-  if (p.trim() !== "") {
-    updateDoc(doc(ref, docRef.id), { page: p });
+  if (pageNum.trim() !== "") {
+    updateDoc(doc(ref, docRef.id), { page: pageNum });
   }
-  if (l.trim() !== "") {
-    updateDoc(doc(ref, docRef.id), { line: l });
+  if (lineNum.trim() !== "") {
+    updateDoc(doc(ref, docRef.id), { line: lineNum });
   }
 };
 

@@ -1,7 +1,7 @@
 import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 import { useEffect, useState } from "react";
 import { handleGetBookshelf } from "../bookshelf/bookServices";
-import { Items } from "./components/Card";
+import { Items } from "./useCardActions";
 
 const useCardList = (uid: string | undefined) => {
   const [loading, setLoading] = useState(true);

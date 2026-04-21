@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
+import { handleSignOut } from "@/features/auth/authServices";
 import React from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { handleSignOut } from "../services";
 import styles from "../styles";
 
 const SettingsScreen = () => {

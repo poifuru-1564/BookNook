@@ -27,7 +27,10 @@ export default function LoginScreen() {
   }
 
   return (
-    <SafeAreaView edges={["top", "bottom"]}>
+    <SafeAreaView
+      edges={["top", "bottom"]}
+      style={{ backgroundColor: ColorPalette.card, flex: 1 }}
+    >
       <View style={styles.loginOuterContainer}>
         <Image
           source={require("../../../img/appIcon.png")}

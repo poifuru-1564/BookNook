@@ -2,7 +2,6 @@ import CoverImage from "@/components/CoverImage";
 import Loading from "@/components/Loading";
 import ModalCloseBtn from "@/components/ModalCloseBtn";
 import SmallModalCloseBtn from "@/components/SmallModalCloseBtn";
-import { userBook } from "@/constants/interface";
 import { auth } from "@/firebase";
 import { EvilIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -22,11 +21,6 @@ import { styles } from "../homeStyles";
 import useCardActions from "../useCardActions";
 import useCardList from "../useCardList";
 import Review from "./Review";
-
-export type Items = {
-  book: userBook;
-  isBorrowed: boolean;
-};
 
 const Card = () => {
   const uid = auth.currentUser?.uid;

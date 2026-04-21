@@ -27,7 +27,6 @@ export const useLogin = () => {
   };
 
   const signin = async () => {
-    setLoading(true);
     const validInput = await validatePassword(email, password);
     if (!validInput.isValid) {
       Alert.alert("Invalid Inputs", validInput.message);
@@ -35,12 +34,16 @@ export const useLogin = () => {
     }
 
     try {
+      setLoading(true);
       const login = await handleEmailSignIn(email, password);
-      if (!login)
+      if (!login) {
         Alert.alert(
           "Sign in Failed",
           "Invalid credentials or email not verified. ",
         );
+        setLoading(false);
+        return;
+      }
     } catch (error: any) {
       Alert.alert("Error", error.message);
     } finally {

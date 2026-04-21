@@ -20,15 +20,6 @@ import {
 import useDisplayQuotes from "../hooks/useDisplayQuotes";
 import AddQuotes from "./AddQuotes";
 
-export interface quote {
-  docID: string;
-  quote: string;
-  title: string;
-  author: string;
-  page: string;
-  line: string;
-}
-
 type Props = {
   keyboardHeight: number;
   isKeyboardVisible: boolean;
