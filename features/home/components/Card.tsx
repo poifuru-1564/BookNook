@@ -139,7 +139,10 @@ const Card = () => {
               <View>
                 <View style={styles.bkOuterContainer}>
                   <View style={styles.imgContainer}>
-                    <CoverImage url={item.book.imageLink} />
+                    <CoverImage
+                      url={item.book.imageLink}
+                      altTitle={item.book.title}
+                    />
                   </View>
 
                   <View style={styles.bkInnerContainer}>

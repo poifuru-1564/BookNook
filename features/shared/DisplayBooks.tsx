@@ -152,7 +152,7 @@ const DisplayBooks = ({ bookshelf, bookshelf2 }: Props) => {
             style={styles.bkContainer}
             onPress={() => bookSelected(item)}
           >
-            <CoverImage url={item.imageLink} />
+            <CoverImage url={item.imageLink} altTitle={item.title} />
           </TouchableOpacity>
         )}
         ListEmptyComponent={

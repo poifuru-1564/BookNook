@@ -20,7 +20,7 @@ export const useLogin = () => {
       setLoading(true);
       await handleGoogleSignIn();
     } catch (error: any) {
-      Alert.alert("Error", error.message);
+      Alert.alert("Error: ", error.message);
     } finally {
       setLoading(false);
     }
@@ -29,7 +29,7 @@ export const useLogin = () => {
   const signin = async () => {
     const validInput = await validatePassword(email, password);
     if (!validInput.isValid) {
-      Alert.alert("Invalid Inputs", validInput.message);
+      Alert.alert("Invalid Inputs: ", validInput.message);
       return;
     }
 
@@ -45,7 +45,7 @@ export const useLogin = () => {
         return;
       }
     } catch (error: any) {
-      Alert.alert("Error", error.message);
+      Alert.alert("Error: ", error.message);
     } finally {
       setLoading(false);
     }

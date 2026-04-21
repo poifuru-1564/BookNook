@@ -31,17 +31,16 @@ const CreateAccountScreen = () => {
           "Verification Sent",
           "Please check your mail box and verify your Email.",
         );
-        router.dismiss(1);
+        router.navigate("/(auth)/login");
       } else {
         Alert.alert("Failed", "Failed to create account. Please try again");
         setLoading(false);
-        return;
       }
     } catch (error: any) {
       Alert.alert("Failed" + error.message);
+    } finally {
       setLoading(false);
     }
-    setLoading(false);
   };
 
   if (loading) {

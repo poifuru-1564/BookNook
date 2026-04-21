@@ -172,6 +172,13 @@ const AddBook = ({
             />
 
             <MyButton onPressAction={() => manualInput()} label="Save" />
+
+            <TouchableOpacity
+              onPress={() => onSearchAgainPressed()}
+              style={{ marginTop: 10 }}
+            >
+              <Text style={styles.noMatchText}>Search Again</Text>
+            </TouchableOpacity>
           </View>
         )}
 
@@ -195,7 +202,7 @@ const AddBook = ({
                     }
                   >
                     <View style={styles.bookCoverImage}>
-                      <CoverImage url={item.imageLink} />
+                      <CoverImage url={item.imageLink} altTitle={item.title} />
                     </View>
                     <View style={styles.descriptionContainer}>
                       <Text style={styles.descriptionText}>{item.title}</Text>

@@ -205,12 +205,13 @@ const useAddBook = (
   const manualInput = async () => {
     try {
       if (typeof uid !== "string") return;
-      const intpage = parseInt(pageNum);
-      await handleManualInput(uid, title, author, intpage);
+      pageNum.trim().length !== 0
+        ? await handleManualInput(uid, title, author, parseInt(pageNum))
+        : await handleManualInput(uid, title, author);
       Alert.alert("", "Added to your wishlist");
       setAddBookVisible(false);
     } catch (error) {
-      console.log("Error manualInput" + error);
+      console.log("Error manualInput:" + error);
       Alert.alert("", "Failed to add book to your wishlist. Please try again");
     }
   };

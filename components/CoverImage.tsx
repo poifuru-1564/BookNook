@@ -1,18 +1,42 @@
+import { ColorPalette, FontSize } from "@/constants/constantValues";
 import React from "react";
-import { Image } from "react-native";
+import { Image, Text, View } from "react-native";
 
 type Props = {
   url: string;
+  altTitle?: string;
 };
 
-const CoverImage = ({ url }: Props) => {
+const CoverImage = ({ url, altTitle }: Props) => {
   if (url === "N/A") {
     return (
-      <Image
-        source={require("../img/unavailable.png")}
-        resizeMode="contain"
-        style={{ width: "100%", height: "100%", marginRight: 10, padding: 10 }}
-      />
+      <View
+        style={{
+          borderWidth: 0.5,
+          borderColor: ColorPalette.muted,
+          height: "100%",
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Image
+          source={require("../img/unavailable.png")}
+          resizeMode="contain"
+          style={{
+            width: "50%",
+            height: "50%",
+          }}
+        />
+        <Text
+          style={{
+            fontSize: FontSize.small,
+            color: ColorPalette.grey,
+          }}
+        >
+          {altTitle}
+        </Text>
+      </View>
     );
   } else {
     return (

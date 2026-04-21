@@ -105,7 +105,7 @@ export const handleCreateAccount = async (email: string, password: string) => {
   } catch (error: any) {
     if (error.code === "auth/email-already-in-use") {
       throw new Error(
-        "Thiss email address is already in use by another account.",
+        "This email address is already in use by another account.",
       );
     } else throw new Error("Failed to create account");
   }

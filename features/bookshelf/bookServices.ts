@@ -76,16 +76,17 @@ export const handleManualInput = async (
   imageLink?: string,
 ) => {
   try {
-    await addDoc(collection(db, "users", uid, "bookshelf"), {
+    let baseData = {
       title: title,
       author: author,
-      pageCount: pageNum,
-      imageLink: imageLink,
       status: "wishlist",
       manual: true,
-    });
-  } catch (error) {
-    console.log("Error handleManualInput(): " + error);
+      imageLink: imageLink !== undefined ? imageLink : "N/A",
+      ...(pageNum !== undefined && { pageCount: pageNum }),
+    };
+    await addDoc(collection(db, "users", uid, "bookshelf"), baseData);
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 };
 
